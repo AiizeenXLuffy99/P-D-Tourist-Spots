@@ -4,6 +4,108 @@
   <meta charset="UTF-8">
   <title>Waterfalls - Tourist Spots</title>
   <link rel="stylesheet" href="./css/styles.css">
+  <style>
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      padding-top: 80px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+      animation: fadeIn 0.5s;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: auto;
+      padding: 20px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+      animation: zoomIn 0.4s forwards;
+      transform: scale(0.7);
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes zoomIn {
+      from {transform: scale(0.7); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: black;
+    }
+
+    .gallery-container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .gallery-item img:hover {
+      transform: scale(1.05);
+    }
+
+    .map-link {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .map-link:hover {
+      background-color: #2980b9;
+    }
+
+    #modalImage {
+      width: 100%;
+      height: auto;
+      margin-bottom: 15px;
+      border-radius: 12px;
+    }
+
+    #thankYouMessage {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
 
@@ -14,49 +116,83 @@
   <a href="../assets/water-falls.html">Water Falls</a>
   <a href="../assets/contact-us.html">Contact Us</a>
   <a href="../assets/about-us.html">About Us</a>
+  <a href="../index.html" class="logout-btn">Logout</a>
 </div>
 
 <div class="gallery-container">
-    <h1>Top Water Falls to Visit</h1>
-  
-    <div class="gallery">
-  
-      <div class="gallery-item">
-        <img src="../imgs/water-falls/waterfall1.jpg" alt="Waterfall 1">
-        <p>🌴 White Sand Paradise – Crystal-clear waters and powdery white sand.</p>
-      </div>
-  
-      <div class="gallery-item">
-        <img src="../imgs/water-falls/waterfall2.jpg" alt="Waterfall 2">
-        <p>🏖️ Golden Sunset Bay – Breathtaking sunsets and calm waves.</p>
-      </div>
-  
-      <div class="gallery-item">
-        <img src="../imgs/water-falls/waterfall3.jpg" alt="Waterfall 3">
-        <p>🌊 Serene Blue Lagoon – Perfect for snorkeling and kayaking.</p>
-      </div>
-  
-      <div class="gallery-item">
-        <img src="../imgs/water-falls/waterfall4.jpg" alt="Waterfall 4">
-        <p>🌅 Coral Cove – Explore vibrant coral reefs and marine life.</p>
-      </div>
-  
-      <div class="gallery-item">
-        <img src="../imgs/water-falls/waterfall5.jpg" alt="Waterfall 5">
-        <p>🏝️ Palm Breeze Beach – Relax with swaying palm trees and hammocks.</p>
-      </div>
-  
-      <div class="gallery-item">
-        <img src="../imgs/water-falls/waterfall5.jpg" alt="Waterfall 5">
-        <p>🌴 Hidden Paradise – Secluded spot with golden sands.</p>
-      </div>
-  
+  <h1>Top Water Falls to Visit</h1>
+
+  <div class="gallery">
+
+    <div class="gallery-item" onclick="openModal('Mangga Falls Pagadian City', 'Mangga Falls in Pagadian City with fresh natural water.', 'https://maps.google.com/?q=Mangga+Falls+Pagadian+City', '../imgs/water-falls/manga-falls1.jpg')">
+      <img src="../imgs/water-falls/manga-falls1.jpg" alt="Waterfall 1">
+      <p>🌴 Mangga Falls Pagadian City</p>
     </div>
+
+    <div class="gallery-item" onclick="openModal('Water Falls of San Pablo', 'Natural hidden gem located in San Pablo.', 'https://maps.google.com/?q=Water+Falls+San+Pablo+Zamboanga', '../imgs/water-falls/waterfall2.jpg')">
+      <img src="../imgs/water-falls/waterfall2.jpg" alt="Waterfall 2">
+      <p>🏖️ Water Falls of San Pablo</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('Merloquet Waterfalls', 'Iconic waterfall located in Zamboanga Sibugay.', 'https://maps.google.com/?q=Merloquet+Falls+Zamboanga', '../imgs/water-falls/merloquet-falls.jpg')">
+      <img src="../imgs/water-falls/merloquet-falls.jpg" alt="Waterfall 3">
+      <p>🌊 Merloquet Waterfalls of Zamboanga Sibugay</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('Tuboran Eriberta Springs', 'Freshwater springs surrounded by lush nature.', 'https://maps.google.com/?q=Tuboran+Eriberta+Springs+Zamboanga+del+sur', '../imgs/water-falls/Tuboran-Eriberta-Spring.jpg')">
+      <img src="../imgs/water-falls/Tuboran-Eriberta-Spring.jpg" alt="Waterfall 4">
+      <p>🌅 Tuboran Eriberta Springs of Zamboanga del Sur</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('Pulacan Falls', 'Popular destination for swimming and nature trips.', 'https://maps.google.com/?q=Pulacan+Falls', '../imgs/water-falls/Pulacan-Falls.jpg')">
+      <img src="../imgs/water-falls/Pulacan-Falls.jpg" alt="Waterfall 5">
+      <p>🏝️ Pulacan Falls</p>
+    </div>
+
+    <div class="gallery-item" onclick="openModal('Hidden Paradise (Ditoray Falls)', 'Ditoray Falls, a hidden paradise in Pagadian.', 'https://maps.google.com/?q=Ditoray+Falls+Pagadian', '../imgs/water-falls/ditoray-falls-pagadian.jpg')">
+      <img src="../imgs/water-falls/ditoray-falls-pagadian.jpg" alt="Waterfall 6">
+      <p>🌴 Hidden Paradise Zamboanga del Sur</p>
+    </div>
+
   </div>
+</div>
+
+<!-- Modal -->
+<div id="waterfallModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Waterfall Image">
+    <h2 id="waterfallTitle"></h2>
+    <p id="waterfallDescription">Welcome to our Water Falls</p>
+    <a id="mapLink" href="#" target="_blank" class="map-link">View Location</a>
+    <div id="thankYouMessage">✨ Thanks for exploring with us! ✨</div>
+  </div>
+</div>
 
 <div class="footer">
-  <p>&copy; 2025 - Zamboanga del sur Tourist Spots. All Rights Reserved.</p>
+  <p>&copy; 2025 - Zamboanga del Sur Tourist Spots. All Rights Reserved.</p>
 </div>
+
+<script>
+  function openModal(title, description, mapUrl, imgUrl) {
+    document.getElementById('waterfallTitle').innerText = title;
+    document.getElementById('waterfallDescription').innerText = description;
+    document.getElementById('mapLink').href = mapUrl;
+    document.getElementById('modalImage').src = imgUrl;
+    document.getElementById('waterfallModal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('waterfallModal').style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    var modal = document.getElementById('waterfallModal');
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
 
 </body>
 </html>
